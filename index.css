@@ -36,7 +36,7 @@ canvas {
 }
 
 #overlay {
-	height: 25vh;
+	height: 25vh;	
 	text-align: center;
 	margin: auto;
 	position: absolute;
@@ -50,7 +50,7 @@ canvas {
 }
 
 #teamBanner {
-	height: 140px;
+	height: 80px;
 	text-align: center;
 	margin: auto;
 	position: absolute;
@@ -61,5 +61,5 @@ canvas {
 	right: 0;
 	vertical-align: text-bottom;
 	background-color: rgba(0,0,0,0.4);
-	font-size: 0.75em;
+	font-size: 50px;
 }
