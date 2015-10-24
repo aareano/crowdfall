@@ -317,14 +317,33 @@ function createBoard() {
 }
 
 function createButtons() {
-	var newSprites = [];
-	var vertOffset = 65
-	newSprites.push(game.add.sprite(game.world.centerX - 332, game.world.height - vertOffset, 'btn-neg-3'));
-	newSprites.push(game.add.sprite(game.world.centerX - 232, game.world.height - vertOffset, 'btn-neg-2'));
-	newSprites.push(game.add.sprite(game.world.centerX - 132, game.world.height - vertOffset, 'btn-neg-1'));
-	newSprites.push(game.add.sprite(game.world.centerX + 68, game.world.height - vertOffset, 'btn-pos-1'));
-	newSprites.push(game.add.sprite(game.world.centerX + 168, game.world.height - vertOffset, 'btn-pos-2'));
-	newSprites.push(game.add.sprite(game.world.centerX + 268, game.world.height - vertOffset, 'btn-pos-3'));
+	var newButtons = [];
+	var newButton;
+	var vertOffset = BOTBAR_HEIGHT - 10;
+
+	newButton = game.add.button(game.world.centerX - 332, game.world.height - vertOffset, 'btn-neg-3', pressButton);
+	newButton.pressVal = -3;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 232, game.world.height - vertOffset, 'btn-neg-2', pressButton);
+	newButton.pressVal = -2;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 132, game.world.height - vertOffset, 'btn-neg-1', pressButton);
+	newButton.pressVal = -1;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 68, game.world.height - vertOffset, 'btn-pos-1', pressButton);
+	newButton.pressVal = 1;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 168, game.world.height - vertOffset, 'btn-pos-2', pressButton);
+	newButton.pressVal = 2;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 268, game.world.height - vertOffset, 'btn-pos-3', pressButton);
+	newButton.pressVal = 3;
+	newButtons.push(newButton);
 }
 
 function createCharacters() {
@@ -349,4 +368,9 @@ function createCharacters() {
 
 	teamLeft.sprite = leftChar;
 	teamRight.sprite = rightChar;
+}
+
+void pressButton(item) {
+	pushCommand(item.pressVal);
+	console.log(typeof item.pressVal, item.pressVal);
 }
