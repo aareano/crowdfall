@@ -107,21 +107,28 @@ function assignTeam() {
 // 	});
 // }
  
+// //when last command of a block is fetched, early simulation must happen
+// //simulate result of the block commands and report back result
+// //set coord on $block/0/
+// function earlySimulate() {
+
+// }
+
+
 //pushes command to relevant team
 function pushCommand(instruction) {
 	//must first check if 
 	//team
 	//check
 	//ref.push(instruction);
+	if (team==="l") {
+		leftRef.push(instruction);
+	} else {
+		rightRef.push(instruction);
+	}
 }
 
 
-//when last command of a block is fetched, early simulation must happen
-//simulate result of the block commands and report back result
-//set coord on $block/0/
-function earlySimulate() {
-
-}
 
 function fetchCommands() {
 
@@ -129,18 +136,19 @@ function fetchCommands() {
 	leftRef = ref.child("leftBlocks");
 	rightRef = ref.child("rightBlocks");
 
-		//
-
 
 	leftRef.once("value", function(snapshot) {
 
 		var lastIndex = snapshot.numChildren();
 
+		var key = snapshot.child(lastIndex).key();
+
 		snapshot.forEach(function (childSnapShot) {
-			pushLeftQueue(childSnapShot.val());
+			if(childSnapShot.key()!=key){
+				pushLeftQueue(childSnapShot.val());
+			}
 		});
 
-		var key = snapshot.child(lastIndex).key();
 
 		leftRef.orderByKey().startAt(key).on("child_added", function(callSnapShot) {
 			pushLeftQueue(callSnapShot.val());
@@ -153,16 +161,20 @@ function fetchCommands() {
 
 		var lastIndex = snapshot.numChildren();
 
+		var key = snapshot.child(lastIndex).key();
+
 		snapshot.forEach(function (childSnapShot) {
-			pushRightQueue(childSnapShot.val());
+			if(childSnapShot.key()!=key){
+				pushRightQueue(childSnapShot.val());
+			}
 		});
 
-		var key = snapshot.child(lastIndex).key();
 
 		rightRef.orderByKey().startAt(key).on("child_added", function(callSnapShot) {
 			pushRightQueue(callSnapShot.val());
 		});
 
 	});
+
 
 }
