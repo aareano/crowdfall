@@ -58,7 +58,8 @@ function preload() {
 	game.load.image('btn-pos-2', 'images/btn-pos-2.png');
 	game.load.image('btn-pos-3', 'images/btn-pos-3.png');
 
-	game.load.image('character', 'images/character.png');
+	game.load.image('red_circle', 'images/red_circle.png');
+	game.load.image('blue_circle', 'images/blue_circle.png');
 }
 
 function create() {
@@ -262,7 +263,7 @@ function renderRight() {
 function renderTeam(team) {
 	var pos = team.position;
 
-	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH - LEFTBAR_WIDTH) / BASE_SIZE);
 	var blockWidth = totalBlockWidth - BOARD_BORDER;
 	var blockHeight = blockWidth;
 	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / blockHeight);
@@ -271,7 +272,7 @@ function renderTeam(team) {
 	var col = pos % BASE_SIZE;
 	var row = Math.floor(pos / BASE_SIZE);
 
-	var posX = (blockWidth / 2) + BOARD_BORDER + ((blockWidth + BOARD_BORDER) * col);
+	var posX = LEFTBAR_WIDTH + (blockWidth / 2) + BOARD_BORDER + ((blockWidth + BOARD_BORDER) * col);
 	var posY = (game.world.height - BOTBAR_HEIGHT) - ((blockHeight + BOARD_BORDER) * (row+1)) + BOARD_BORDER;
 
 	team.sprite.x = posX;
@@ -384,10 +385,10 @@ function createButtons() {
 }
 
 function createCharacters() {
-	var leftChar = game.add.sprite(-1000, -1000, 'character');
-	var rightChar = game.add.sprite(-1000, -1000, 'character');
+	var leftChar = game.add.sprite(-1000, -1000, 'blue_circle');
+	var rightChar = game.add.sprite(-1000, -1000, 'red_circle');
 
-	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH - LEFTBAR_WIDTH) / BASE_SIZE);
 	var blockWidth = totalBlockWidth - BOARD_BORDER;
 	var blockHeight = blockWidth;
 	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / blockHeight);
