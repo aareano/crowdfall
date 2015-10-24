@@ -365,29 +365,30 @@ function createButtons() {
 	var newButtons = [];
 	var newButton;
 	var vertOffset = BOTBAR_HEIGHT - 10;
-	var buttonWidth = 64 + 20
+	// var buttonWidth = 64 + 20
+	var buttonWidth = 64;
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 2.75, game.world.height - vertOffset, 'btn-neg-3', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX - (buttonWidth + (buttonWidth * 2.75)), game.world.height - vertOffset, 'btn-neg-3', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -3;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 1.75, game.world.height - vertOffset, 'btn-neg-2', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX - (buttonWidth + (buttonWidth * 1.75)), game.world.height - vertOffset, 'btn-neg-2', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -2;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 0.75, game.world.height - vertOffset, 'btn-neg-1', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX - (buttonWidth + (buttonWidth * 0.75)), game.world.height - vertOffset, 'btn-neg-1', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -1;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 0.75, game.world.height - vertOffset, 'btn-pos-1', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX + (buttonWidth + (buttonWidth * 0.75)), game.world.height - vertOffset, 'btn-pos-1', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 1;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 1.75, game.world.height - vertOffset, 'btn-pos-2', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX + (buttonWidth + (buttonWidth * 1.75)), game.world.height - vertOffset, 'btn-pos-2', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 2;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 2.75, game.world.height - vertOffset, 'btn-pos-3', pressButton, 0, 1, 0, 2);
+	newButton = game.add.button(game.world.centerX + (buttonWidth + (buttonWidth * 2.75)), game.world.height - vertOffset, 'btn-pos-3', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 3;
 	newButtons.push(newButton);
 }
