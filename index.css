@@ -10,3 +10,7 @@ canvas {
 #phaser-wrapper {
 	text-align: center;
 }
+
+#authButton {
+	background-image:url(http://i.imgur.com/7M5Jo5K.png);
+}
