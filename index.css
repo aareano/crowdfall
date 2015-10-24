@@ -1,3 +1,11 @@
 html, body {
 	margin: 0;
 }
+
+canvas {
+	text-align: center;
+}
+
+#phaser-wrapper {
+	text-align: center;
+}

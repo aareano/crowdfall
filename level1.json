@@ -1,0 +1,15 @@
+{
+    "assets": {
+        "arrow-up": {"type": "image", "source": "images/arrow-up.png"},
+        "arrow-up-ext": {"type": "image", "source": "images/arrow-down.png"},
+        "arrow-down": {"type": "image", "source": "images/arrow-down.png"},
+        "arrow-down-ext": {"type": "image", "source": "images/arrow-down.png"},
+        "unit": {"type": "image", "source": "images/unit.png"},
+        "background_image": {"type": "image", "source": "images/background.png"},
+        "character": {"type": "spritesheet", "source": "images/character.png", "frame_width": 28, "frame_height": 28}
+    },
+    "groups": [
+        "background",
+        "arrows"
+    ]
+}

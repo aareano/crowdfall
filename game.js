@@ -6,7 +6,16 @@ var SINGLE_DOWN = 13;
 var DOUBLE_UP = 53;
 var DOUBLE_DOWN = 59;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+var FEED_BORDER = 10;
+var BOARD_BORDER = 10;
+
+var BOTBAR_HEIGHT = 100;
+var RIGHTBAR_WIDTH = 250;
+
+var buttons;
+var boardBack;
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-wrapper', {
 	preload: preload,
 	create: create,
 	update: update,
@@ -27,26 +36,41 @@ teamRight.position = 0;
 
 var activeTeam = teamLeft;
 
-var border = 10;
-
 function preload() {
 	game.load.image('box', 'square.png');
+
+	game.load.image('unit', 'images/unit.png');
+
+	game.load.image('arrow-up', 'images/arrow-up.png');
+	game.load.image('arrow-down', 'images/arrow-down.png');
+	game.load.image('arrow-up-ext', 'images/arrow-up-ext.png');
+	game.load.image('arrow-down-ext', 'images/arrow-down-ext.png');
+
+	game.load.image('btn-neg-3', 'images/btn-neg-3.png');
+	game.load.image('btn-neg-2', 'images/btn-neg-2.png');
+	game.load.image('btn-neg-1', 'images/btn-neg-1.png');
+	game.load.image('btn-pos-1', 'images/btn-pos-1.png');
+	game.load.image('btn-pos-2', 'images/btn-pos-2.png');
+	game.load.image('btn-pos-3', 'images/btn-pos-3.png');
+
+	game.load.image('character', 'images/character.png');
 }
 
 function create() {
-	game.stage.backgroundColor = 0x000000;
+	game.stage.backgroundColor = 0xffffff;
 
-	// pushLeftQueue(-3);
-	// pushLeftQueue(2);
-	// pushLeftQueue(-3);
-	// pushLeftQueue(-1);
-	// pushLeftQueue(3);
+	if (myTeam == "l") {
+		activeTeam = teamLeft;
+	} else {
+		activeTeam = teamRight;
+	}
 
-	// pushRightQueue(3);
-	// pushRightQueue(-1);
-	// pushRightQueue(2);
-	// pushRightQueue(2);
-	// pushRightQueue(-1);
+	createCharacters();
+
+	boardBack = createBoard();
+	buttons = createButtons();
+
+	fetchCommands();
 }
 
 var downFlag = false;
@@ -55,11 +79,14 @@ var upFlag = false;
 function update() {
 	var cursors = game.input.keyboard.createCursorKeys();
 
+	// popLeftQueue();
+	// popRightQueue();
+
 	if (cursors.up.isDown) {
 		if (! upFlag) {
+			// upFlag = true;
 			popLeftQueue();
 			popRightQueue();
-			upFlag = true;
 		}
 	} else {
 		upFlag = false;
@@ -67,15 +94,15 @@ function update() {
 }
 
 function render() {
-	game.stage.backgroundColor = 0x000000;
-
 	renderFeed();
+	renderLeft();
+	renderRight();
 }
 
 function renderFeed() {
 	var feedLimit;
 	if (activeTeam.boxSets.length > 0) {
-		feedLimit = game.world.height / (activeTeam.boxSets[0][0].height + border);
+		feedLimit = (game.world.height - BOTBAR_HEIGHT) / (activeTeam.boxSets[0][0].height + FEED_BORDER) - 1;
 	} else {
 		feedLimit = 0;
 	}
@@ -97,8 +124,8 @@ function renderInst(inst, boxes, depth) {
 			factor = 4 - i;
 		}
 
-		newBox.x = game.world.width - ((newBox.width + border) * factor);
-		newBox.y = (depth * (border + newBox.height)) + border;
+		newBox.x = game.world.width - ((newBox.width + FEED_BORDER) * factor);
+		newBox.y = (depth * (FEED_BORDER + newBox.height)) + FEED_BORDER;
 	}
 }
 
@@ -144,7 +171,6 @@ function popQueue(team) {
 
 		// Calc new position
 		team.position = calcEndpoint(team.position, inst);
-		console.log(team.nameID, team.position);
 	}
 }
 
@@ -156,7 +182,7 @@ function calcEndpoint(posit, instruction) {
 
 	if (inst > 0) {
 		if ((pos + inst) % BASE_SIZE < pos % BASE_SIZE) {
-			pos = (Math.floor(pos / BASE_SIZE) + 1) * BASE_SIZE;
+			pos = ((Math.floor(pos / BASE_SIZE) + 1) * BASE_SIZE) - 1;
 		} else {
 			pos += inst;
 		}
@@ -171,7 +197,6 @@ function calcEndpoint(posit, instruction) {
 	// Guarantees landing in-bounds
 	if (pos != 0) {
 		if ((pos % SINGLE_UP) == 0) {
-			console.log(pos, SINGLE_UP, (pos % SINGLE_UP));
 			if ((pos + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
 				pos += BASE_SIZE;
 			}
@@ -191,4 +216,141 @@ function calcEndpoint(posit, instruction) {
 	}
 
 	return pos;
+}
+
+function renderLeft() {
+	renderTeam(teamLeft);
+}
+
+function renderRight() {
+	renderTeam(teamRight);
+}
+
+function renderTeam(team) {
+	var pos = team.position;
+
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var blockWidth = totalBlockWidth - BOARD_BORDER;
+	var blockHeight = blockWidth;
+	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / blockHeight);
+
+	// Fancy math-like things
+	var col = pos % BASE_SIZE;
+	var row = Math.floor(pos / BASE_SIZE);
+
+	var posX = (blockWidth / 2) + BOARD_BORDER + ((blockWidth + BOARD_BORDER) * col);
+	var posY = (game.world.height - BOTBAR_HEIGHT) - ((blockHeight + BOARD_BORDER) * (row+1)) + BOARD_BORDER;
+
+	team.sprite.x = posX;
+	team.sprite.y = posY;
+}
+
+function createBoard() {
+	// Initialize board
+	var index;
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var blockWidth = totalBlockWidth - BOARD_BORDER;
+	var blockHeight = blockWidth;
+	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / (blockHeight + BOARD_BORDER));
+
+	// Constants are dummies
+	BOARD_HEIGHT = numFloors;
+	console.log(BOARD_HEIGHT);
+
+	var newSprite;
+	var newArrow;
+	var newX;
+	var newY;
+
+	var unitScaleFactor = blockWidth / game.cache.getImage('unit').width;
+	var upScaleFactor = blockWidth / game.cache.getImage('arrow-up').width;
+	var downScaleFactor = blockWidth / game.cache.getImage('arrow-down').width;
+	var doubleUpScaleFactor = blockWidth / game.cache.getImage('arrow-up-ext').width;
+	var doubleDownScaleFactor = blockWidth / game.cache.getImage('arrow-down-ext').width;
+
+	var tiles = [];
+	var arrows = [];
+
+	// Draw tiles
+	for (var row = 0; row <= numFloors; row++) {
+		for (var col = 0; col < BASE_SIZE; col++) {
+			newArrow = undefined;
+			newSprite = undefined;
+
+			newX = ((blockWidth + BOARD_BORDER) * col) + BOARD_BORDER;
+			newY = (game.world.height - (((blockHeight + BOARD_BORDER) * row) + BOTBAR_HEIGHT));
+			newSprite = game.add.sprite(newX, newY, 'unit');
+			newSprite.scale.setTo(unitScaleFactor, unitScaleFactor);
+
+			// Handle arrow creation
+			index = col + (row * BASE_SIZE);
+
+			if ((index % SINGLE_UP) == 0) {
+				if (((index + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) && index != 0) {
+					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-up');
+					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
+					newArrow.scale.setTo(upScaleFactor, upScaleFactor);
+				}
+			} else if ((index % SINGLE_DOWN) == 0) {
+				if ((index - BASE_SIZE) >= 0) {
+					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-down');
+					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
+					newArrow.scale.setTo(downScaleFactor, downScaleFactor);
+				}
+			} else if ((index % DOUBLE_UP) == 0) {
+				if ((index + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
+					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-up-ext');
+					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
+					newArrow.scale.setTo(doubleUpScaleFactor, doubleUpScaleFactor);
+				}
+			} else if ((index % DOUBLE_DOWN) == 0) {
+				if ((index - (BASE_SIZE + BASE_SIZE)) >= 0) {
+					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-down-ext');
+					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
+					newArrow.scale.setTo(doubleDownScaleFactor, doubleDownScaleFactor);
+				}
+			}
+
+			if (newArrow != undefined) {
+				arrows.push(newArrow);
+			}
+
+			tiles.push(newSprite);
+		}
+	}
+}
+
+function createButtons() {
+	var newSprites = [];
+	var vertOffset = 65
+	newSprites.push(game.add.sprite(game.world.centerX - 332, game.world.height - vertOffset, 'btn-neg-3'));
+	newSprites.push(game.add.sprite(game.world.centerX - 232, game.world.height - vertOffset, 'btn-neg-2'));
+	newSprites.push(game.add.sprite(game.world.centerX - 132, game.world.height - vertOffset, 'btn-neg-1'));
+	newSprites.push(game.add.sprite(game.world.centerX + 68, game.world.height - vertOffset, 'btn-pos-1'));
+	newSprites.push(game.add.sprite(game.world.centerX + 168, game.world.height - vertOffset, 'btn-pos-2'));
+	newSprites.push(game.add.sprite(game.world.centerX + 268, game.world.height - vertOffset, 'btn-pos-3'));
+}
+
+function createCharacters() {
+	var leftChar = game.add.sprite(-1000, -1000, 'character');
+	var rightChar = game.add.sprite(-1000, -1000, 'character');
+
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var blockWidth = totalBlockWidth - BOARD_BORDER;
+	var blockHeight = blockWidth;
+	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / blockHeight);
+
+	var scaleFactorX = blockWidth / leftChar.width;
+	var scaleFactorY = blockHeight / leftChar.height;
+
+	var scaleFactor = Math.min(scaleFactorX, scaleFactorY);
+
+	leftChar.scale.setTo(scaleFactor, scaleFactor);
+	rightChar.scale.setTo(scaleFactor, scaleFactor);
+
+	leftChar.anchor.setTo(0.5, 0);
+	rightChar.anchor.setTo(0.5, 0);
+
+	teamLeft.sprite = leftChar;
+	teamRight.sprite = rightChar;
 }
