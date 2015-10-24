@@ -63,3 +63,14 @@ canvas {
 	background-color: rgba(0,0,0,0.4);
 	font-size: 50px;
 }
+
+#title {
+	color:black;
+	margin: auto;
+	text-align: center;
+    margin-top: 25px;
+}
+
+#phaser-wrapper {
+	margin-top: 25px;
+}
