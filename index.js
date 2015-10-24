@@ -123,6 +123,7 @@ function assignTeam() {
 
 //pushes command to relevant team
 function pushCommand(instruction) {
+	console.log(myTeam);
 	if (myTeam === "l") {
 		leftRef.push(instruction);
 	} else if (myTeam === "r") {
