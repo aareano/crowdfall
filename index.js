@@ -11,7 +11,7 @@ var myTeam = "lol";
 
 
 var numBlocks;
-
+	
 //onAuth watch
 ref.onAuth(function(authData) {
 	if (authData) {
@@ -26,6 +26,7 @@ ref.onAuth(function(authData) {
 
 function setVarsOnAuth(authData) {
 	auth = authData;
+	console.log("jsonauth is" +JSON.stringify(auth));
 	userRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid);
 	assignTeam();
 	leftRef = ref.child("leftBlocks");
@@ -35,7 +36,6 @@ function setVarsOnAuth(authData) {
 function fbAuth() {
 	ref.authWithOAuthPopup("facebook", function(error, authData) {
 	  if (error) {
-	    console.log("Login Failed!", error);
 	    setVarsOnAuth(authData);
 	    hideAuthOverlay();
 	  } else {
@@ -48,9 +48,10 @@ function fbAuth() {
 function assignTeam() {
 	//check if new user
 	var teamRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid+"/team");
-	console.log(teamRef);
+	console.log('teamref'+teamRef);
 	teamRef.on("value", function(snap) {
-		if (snap) {
+		if (snap.val()) {
+			console.log(snap.val());
 			//not a new user
 			myTeam = snap.val();
 		} else {
@@ -67,6 +68,7 @@ function assignTeam() {
 			//store value on firebase
 			teamRef.set(myTeam);
 		}
+		console.log(myTeam);
 	});
 }
 
