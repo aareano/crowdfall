@@ -1,5 +1,9 @@
 html, body {
 	margin: 0;
+	font-family: 'Roboto', 'Arial';
+	font-weight: 300;
+	font-size: 2em;
+	color: white;
 }
 
 canvas {
@@ -9,6 +13,12 @@ canvas {
 
 #phaser-wrapper {
 	text-align: center;
+}
+
+#authText {
+	display: block;
+	top: 50%;
+ 	transform: translateY(25%);
 }
 
 #authButton {
@@ -37,4 +47,19 @@ canvas {
 	right: 0;
 	vertical-align: text-bottom;
 	background-color: rgba(0,0,0,0.4);
+}
+
+#teamBanner {
+	height: 25vh;
+	text-align: center;
+	margin: auto;
+	position: absolute;
+	top: 75vh;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	vertical-align: text-bottom;
+	background-color: rgba(0,0,0,0.4);
+	font-size: 0.75em;
 }

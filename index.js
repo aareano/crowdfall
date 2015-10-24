@@ -6,7 +6,8 @@ var auth;
 var leftRef;
 var rightRef;
 
-var myTeam;
+//default for nonAuth spectating
+var myTeam = "l";
 var numBlocks;
 
 //onAuth watch
@@ -184,12 +185,21 @@ function fetchCommands() {
 
 function hideAuthOverlay() {
 	$(document).ready(function(){
-		$('#overlay').hide();
+		$("#overlay").hide();
+		$("#teamBanner").show();
 	});
+
+	if (myTeam==="l") {
+		$("#teamP").text("Left");
+	} else {
+		$("#teamP").text("Right");
+	}
 }
 
 function showAuthOverlay() {
 	$(document).ready(function(){
-		$('#overlay').show();
+		$("#overlay").show();
+		$("#teamBanner").hide();
 	});
+
 }
