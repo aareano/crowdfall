@@ -122,6 +122,13 @@ function earlySimulate() {
 
 function fetchCommands() {
 
+	//allow pre-auth access temporarily
+	leftRef = ref.child("leftBlocks");
+	rightRef = ref.child("rightBlocks");
+
+		//
+
+
 	leftRef.once("value", function(snapshot) {
 
 		var lastIndex = snapshot.numChildren();
