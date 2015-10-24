@@ -60,6 +60,8 @@ function preload() {
 
 	game.load.image('red_circle', 'images/red_circle.png');
 	game.load.image('blue_circle', 'images/blue_circle.png');
+
+	game.load.image('polyhack', 'images/polyhack.png');
 }
 
 function create() {
@@ -299,6 +301,7 @@ function createBoard() {
 	var downScaleFactor = blockWidth / game.cache.getImage('arrow-down').width;
 	var doubleUpScaleFactor = blockWidth / game.cache.getImage('arrow-up-ext').width;
 	var doubleDownScaleFactor = blockWidth / game.cache.getImage('arrow-down-ext').width;
+	var goalScaleFactor = blockWidth / game.cache.getImage('polyhack').width;
 
 	var tiles = [];
 	var arrows = [];
@@ -348,6 +351,12 @@ function createBoard() {
 			}
 
 			tiles.push(newSprite);
+
+			// add polyhack
+			if (row == numFloors - 1 && col == BASE_SIZE - 1) {
+				newSprite = game.add.sprite(newX, newY - ((blockHeight * 2 + 10) + (BOARD_BORDER / 2)), 'polyhack');
+				newSprite.scale.setTo(goalScaleFactor, goalScaleFactor);
+			}
 		}
 	}
 }
