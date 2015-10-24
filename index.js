@@ -69,15 +69,15 @@ function assignTeam() {
 			teamRef.set(myTeam);
 		}
 		console.log(myTeam);
+		$(document).ready(function(){
+			if (myTeam.localeCompare("l")===0) {
+				$("#teamP").text(" Left");
+			} else {
+				$("#teamP").text(" Right");
+			}
+		});
 	});
 
-	$(document).ready(function(){
-		if (myTeam.localeCompare("l")===0) {
-			$("#teamP").text(" Left");
-		} else {
-			$("#teamP").text(" Right");
-		}
-	});
 }
 
 
@@ -200,13 +200,6 @@ function hideAuthOverlay() {
 		$("#teamBanner").show();
 	});
 
-	console.log('team is    L   '+myTeam);
-
-	if (myTeam.localeCompare("l")===0) {
-		$("#teamP").text(" Left");
-	} else {
-		$("#teamP").text(" Right");
-	}
 }
 
 function showAuthOverlay() {
