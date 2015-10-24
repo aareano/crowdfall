@@ -64,38 +64,45 @@ function assignTeam() {
 	});
 }
 
-//fetches commands starting from last block
-function getLeftBlocks() {
-	leftRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
-		//first value should be the position key, "0" for the sake of ordering with timeStamp keys
-		if (snapshot.key() === "0") {
-			//the value is the coord. that left should start simulation
-			//	someCoordVal = snapshot.val();
-			//	call some relevant functions without call back to complete setup before commands arrive;
-		} else {
-			//value is a command
-			//	someCommandVal = snapshot.val();
-			//	call some relevant function to add it to phaser queue
-		}
-	});
-}
+// //fetches commands starting from last block
+// function getLeftBlocks() {
 
-//fetches commands starting from last block
-function getRightBlocks() {
-	rightRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
-		//first value should be the position key, "0" for the sake of ordering with timeStamp keys
-		if (snapshot.key() === "0") {
-			//the value is the coord. that left should start simulation
-			//	someCoordVal = snapshot.val();
-			//	call some relevant functions without call back to complete setup before commands arrive;
-		} else {
-			//value is a command
-			//	someCommandVal = snapshot.val();
-			//	call some relevant function to add it to phaser queue
-		}
-	});
-}
+// //start at, not limit
 
+// 	// leftRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+// 	// 	//first value should be the position key, "0" for the sake of ordering with timeStamp keys
+// 	// 	if (snapshot.key() === "0") {
+// 	// 		//the value is the coord. that left should start simulation
+// 	// 		//	someCoordVal = snapshot.val();
+// 	// 		//	call some relevant functions without call back to complete setup before commands arrive;
+// 	// 	} else {
+// 	// 		//value is a command
+// 	// 		//	someCommandVal = snapshot.val();
+// 	// 		//	call some relevant function to add it to phaser queue
+
+// 	// 		//commands: -3, -2, -1, 1, 2, 3
+// 	// 	}
+// 	// });
+
+
+// }
+
+// //fetches commands starting from last block
+// function getRightBlocks() {
+// 	rightRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+// 		//first value should be the position key, "0" for the sake of ordering with timeStamp keys
+// 		if (snapshot.key() === "0") {
+// 			//the value is the coord. that left should start simulation
+// 			//	someCoordVal = snapshot.val();
+// 			//	call some relevant functions without call back to complete setup before commands arrive;
+// 		} else {
+// 			//value is a command
+// 			//	someCommandVal = snapshot.val();
+// 			//	call some relevant function to add it to phaser queue
+// 		}
+// 	});
+// }
+ 
 //pushes command to relevant team
 function pushCommand() {
 	//must first check if 
@@ -106,5 +113,42 @@ function pushCommand() {
 //simulate result of the block commands and report back result
 //set coord on $block/0/
 function earlySimulate() {
+
+}
+
+function fetchCommands() {
+
+	leftRef.once("value", function(snapshot) {
+
+		var lastIndex = snapshot.numChildren();
+
+		snapshot.forEach(function (childSnapShot) {
+			pushLeftQueue(childSnapShot.val());
+		});
+
+		var key = snapshot.child(lastIndex).key();
+
+		leftRef.orderByKey().startAt(key).on("child_added", function(callSnapShot) {
+			pushLeftQueue(callSnapShot.val());
+		});
+
+	});
+
+
+	rightRef.once("value", function(snapshot) {
+
+		var lastIndex = snapshot.numChildren();
+
+		snapshot.forEach(function (childSnapShot) {
+			pushrightQueue(childSnapShot.val());
+		});
+
+		var key = snapshot.child(lastIndex).key();
+
+		rightRef.orderByKey().startAt(key).on("child_added", function(callSnapShot) {
+			pushrightQueue(callSnapShot.val());
+		});
+
+	});
 
 }
