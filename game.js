@@ -288,7 +288,6 @@ function createBoard() {
 
 	// Constants are dummies
 	BOARD_HEIGHT = numFloors;
-	console.log(BOARD_HEIGHT);
 
 	var newSprite;
 	var newArrow;
@@ -410,5 +409,4 @@ function createCharacters() {
 
 function pressButton(item) {
 	pushCommand(item.pressVal);
-	console.log(typeof item.pressVal, item.pressVal);
 }
