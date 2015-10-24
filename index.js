@@ -26,7 +26,7 @@ ref.onAuth(function(authData) {
 
 function setVarsOnAuth(authData) {
 	auth = authData;
-	userRef = new Firebase("https://crowdfall.firebaseio.com/users/"+authData.uid);
+	userRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid);
 	assignTeam();
 	leftRef = ref.child("leftBlocks");
 	rightRef = ref.child("rightBlocks");
@@ -47,8 +47,8 @@ function fbAuth() {
 //new users will be assigned to a new team randomly
 function assignTeam() {
 	//check if new user
-	var teamRef = userRef.child("team");
-
+	var teamRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid+"/team");
+	console.log(teamRef);
 	teamRef.on("value", function(snap) {
 		if (snap) {
 			//not a new user

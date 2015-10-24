@@ -154,7 +154,6 @@ function renderLeftInst(inst, boxes, depth) {
 
 		newBox.x = ((newBox.width + FEED_BORDER) * 6) - ((newBox.width + FEED_BORDER) * factor) + FEED_BORDER;
 		newBox.y = (depth * (FEED_BORDER + newBox.height)) + FEED_BORDER;
-		console.log(newBox.x);
 	}
 }
 
