@@ -121,14 +121,12 @@ function assignTeam() {
 
 //pushes command to relevant team
 function pushCommand(instruction) {
-	//must first check if 
-	//team
-	//check
-	//ref.push(instruction);
-	if (team==="l") {
+	if (myTeam === "l") {
 		leftRef.push(instruction);
-	} else {
+	} else if (myTeam === "r") {
 		rightRef.push(instruction);
+	} else {
+		// bad
 	}
 }
 
