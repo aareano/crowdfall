@@ -3,19 +3,29 @@
 		<title>CrowdFall</title>
 	    <link rel="stylesheet" type="text/css" href="index.css" />
 	    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
-
+	    
 	</head>
 
+	<style>
+		#title {
+			font-family:Courier New, Courier, monospace; 
+			color:black;
+			margin-left: 50px;
+			margin-top: 150px;
+			float: left;
+		}
 
+		#phaser-wrapper {
+			margin-top: 50px;
+		}
+	</style>
 
 	<body>
-
-
+		<div id="title">CROWD FALL</div>
 		<div id="overlay"><label for="authButton" id="authText">To play: </label><button id="authButton" onclick="fbAuth()" /></div>
 		<div id="teamBanner" style="display: none;"><p>You are team:</p><p id="teamP"></p></div>
 
 		<div id="phaser-wrapper"></div>
-
 	    <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
 		<script src="phaser.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
