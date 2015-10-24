@@ -9,6 +9,17 @@
 <body>
 
 
+    <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+    <script>
+	    var ref = new Firebase("https://crowdfall.firebaseio.com");
+	    ref.authWithOAuthPopup("facebook", function(error, authData) {
+	      if (error) {
+	        console.log("Login Failed!", error);
+	      } else {
+	        console.log("Authenticated successfully with payload:", authData);
+	      }
+	    });
+    </script>
 </body>
 
 </html>
