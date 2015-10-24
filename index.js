@@ -178,3 +178,11 @@ function fetchCommands() {
 
 
 }
+
+function hideAuthOverlay() {
+
+}
+
+function showAuthOverlay() {
+	
+}
