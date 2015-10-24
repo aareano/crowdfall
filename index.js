@@ -193,9 +193,9 @@ function hideAuthOverlay() {
 	});
 
 	if (myTeam==="l") {
-		$("#teamP").text("Left");
+		$("#teamP").text(" Left");
 	} else {
-		$("#teamP").text("Right");
+		$("#teamP").text(" Right");
 	}
 }
 
