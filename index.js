@@ -7,7 +7,9 @@ var leftRef;
 var rightRef;
 
 //default for nonAuth spectating
-var myTeam = "l";
+var myTeam = "lol";
+
+
 var numBlocks;
 
 //onAuth watch
