@@ -7,7 +7,7 @@ var leftRef;
 var rightRef;
 
 var team;
-var currBlock;
+var numBlocks;
 
 //onAuth watch
 ref.onAuth(function(authData) {
@@ -66,10 +66,32 @@ function assignTeam() {
 
 //fetches commands starting from last block
 function getLeftBlocks() {
-
+	leftRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+		//first value should be the position key, "0" for the sake of ordering with timeStamp keys
+		if (snapshot.key() === "0") {
+			//the value is the coord. that left should start simulation
+			//	someCoordVal = snapshot.val();
+			//	call some relevant functions without call back to complete setup before commands arrive;
+		} else {
+			//value is a command
+			//	someCommandVal = snapshot.val();
+			//	call some relevant function to add it to phaser queue
+		}
+	});
 }
 
 //fetches commands starting from last block
 function getRightBlocks() {
-
+	rightRef.orderByKey().limitToLast(1).on("child_added", function(snapshot) {
+		//first value should be the position key, "0" for the sake of ordering with timeStamp keys
+		if (snapshot.key() === "0") {
+			//the value is the coord. that left should start simulation
+			//	someCoordVal = snapshot.val();
+			//	call some relevant functions without call back to complete setup before commands arrive;
+		} else {
+			//value is a command
+			//	someCommandVal = snapshot.val();
+			//	call some relevant function to add it to phaser queue
+		}
+	});
 }
