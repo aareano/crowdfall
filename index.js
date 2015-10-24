@@ -192,7 +192,9 @@ function hideAuthOverlay() {
 		$("#teamBanner").show();
 	});
 
-	if (myTeam==="l") {
+	console.log('team is    L   '+myTeam);
+
+	if (myTeam=="l") {
 		$("#teamP").text(" Left");
 	} else {
 		$("#teamP").text(" Right");
