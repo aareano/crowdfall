@@ -15,18 +15,15 @@ var numBlocks;
 //onAuth watch
 ref.onAuth(function(authData) {
 	if (authData) {
-		console.log("Authenticated with uid:", authData.uid);
 		setVarsOnAuth(authData);
 		hideAuthOverlay();
 	} else {
-		console.log("Unauthenticated");
 		showAuthOverlay();
 	}
 });
 
 function setVarsOnAuth(authData) {
 	auth = authData;
-	console.log("jsonauth is" +JSON.stringify(auth));
 	userRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid);
 	assignTeam();
 	leftRef = ref.child("leftBlocks");
@@ -39,7 +36,6 @@ function fbAuth() {
 	    setVarsOnAuth(authData);
 	    hideAuthOverlay();
 	  } else {
-	    console.log("Authenticated successfully with payload:", authData);
 	  }
 	});
 }
@@ -48,10 +44,8 @@ function fbAuth() {
 function assignTeam() {
 	//check if new user
 	var teamRef = new Firebase("https://crowdfall.firebaseio.com/users/"+auth.uid+"/team");
-	console.log('teamref'+teamRef);
 	teamRef.on("value", function(snap) {
 		if (snap.val()) {
-			console.log(snap.val());
 			//not a new user
 			myTeam = snap.val();
 		} else {
@@ -68,7 +62,6 @@ function assignTeam() {
 			//store value on firebase
 			teamRef.set(myTeam);
 		}
-		console.log(myTeam);
 		$(document).ready(function(){
 			if (myTeam.localeCompare("l")===0) {
 				$("#teamP").text(" Left");
@@ -133,7 +126,6 @@ function assignTeam() {
 
 //pushes command to relevant team
 function pushCommand(instruction) {
-	console.log(myTeam);
 	if (myTeam === "l") {
 		leftRef.push(instruction);
 	} else if (myTeam === "r") {
