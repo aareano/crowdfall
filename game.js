@@ -81,18 +81,7 @@ var upFlag = false;
 function update() {
 	var cursors = game.input.keyboard.createCursorKeys();
 
-	// popLeftQueue();
-	// popRightQueue();
-
-	// if (cursors.up.isDown) {
-	// 	if (! upFlag) {
-	// 		// upFlag = true;
-	// 		popLeftQueue();
-	// 		popRightQueue();
-	// 	}
-	// } else {
-	// 	upFlag = false;
-	// }
+	
 }
 
 function render() {
@@ -306,13 +295,13 @@ function createBoard() {
 				}
 			} else if ((index % DOUBLE_UP) == 0) {
 				if ((index + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
-					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-up-ext');
+					newArrow = game.add.sprite(newX, newY-((blockHeight + (BOARD_BORDER / 2)) * 2), 'arrow-up-ext');
 					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
 					newArrow.scale.setTo(doubleUpScaleFactor, doubleUpScaleFactor);
 				}
 			} else if ((index % DOUBLE_DOWN) == 0) {
 				if ((index - (BASE_SIZE + BASE_SIZE)) >= 0) {
-					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-down-ext');
+					newArrow = game.add.sprite(newX, newY-((blockHeight + (BOARD_BORDER / 2)) * 1), 'arrow-down-ext');
 					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
 					newArrow.scale.setTo(doubleDownScaleFactor, doubleDownScaleFactor);
 				}
