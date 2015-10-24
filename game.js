@@ -88,8 +88,6 @@ var upFlag = false;
 
 function update() {
 	var cursors = game.input.keyboard.createCursorKeys();
-
-	
 }
 
 function render() {
@@ -232,7 +230,7 @@ function calcEndpoint(posit, instruction) {
 	// Guarantees landing in-bounds
 	if (pos != 0) {
 		if ((pos % SINGLE_UP) == 0) {
-			if ((pos + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
+			if ((pos + BASE_SIZE) < (BASE_SIZE * (BOARD_HEIGHT + 1))) {
 				pos += BASE_SIZE;
 			}
 		} else if ((pos % SINGLE_DOWN) == 0) {
@@ -240,7 +238,7 @@ function calcEndpoint(posit, instruction) {
 				pos -= BASE_SIZE;
 			}
 		} else if ((pos % DOUBLE_UP) == 0) {
-			if ((pos + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
+			if ((pos + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * (BOARD_HEIGHT + 1))) {
 				pos += BASE_SIZE + BASE_SIZE;
 			}
 		} else if ((pos % DOUBLE_DOWN) == 0) {
@@ -263,6 +261,12 @@ function renderRight() {
 
 function renderTeam(team) {
 	var pos = team.position;
+
+	if (pos == (BASE_SIZE * (BOARD_HEIGHT + 1)) - 1) {
+		console.log('win');
+		teamLeft.position = 0;
+		teamRight.position = 0;
+	}
 
 	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH - LEFTBAR_WIDTH) / BASE_SIZE);
 	var blockWidth = totalBlockWidth - BOARD_BORDER;
@@ -321,7 +325,7 @@ function createBoard() {
 			index = col + (row * BASE_SIZE);
 
 			if ((index % SINGLE_UP) == 0) {
-				if (((index + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) && index != 0) {
+				if (((index + BASE_SIZE) < (BASE_SIZE * (BOARD_HEIGHT + 1))) && index != 0) {
 					newArrow = game.add.sprite(newX, newY-(blockHeight + (BOARD_BORDER / 2)), 'arrow-up');
 					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
 					newArrow.scale.setTo(upScaleFactor, upScaleFactor);
@@ -333,7 +337,7 @@ function createBoard() {
 					newArrow.scale.setTo(downScaleFactor, downScaleFactor);
 				}
 			} else if ((index % DOUBLE_UP) == 0) {
-				if ((index + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * BOARD_HEIGHT)) {
+				if ((index + BASE_SIZE + BASE_SIZE) < (BASE_SIZE * (BOARD_HEIGHT + 1))) {
 					newArrow = game.add.sprite(newX, newY-((blockHeight + (BOARD_BORDER / 2)) * 2), 'arrow-up-ext');
 					// newArrow = game.add.sprite(newX, newY-(BOARD_BORDER / 2), 'arrow-up');
 					newArrow.scale.setTo(doubleUpScaleFactor, doubleUpScaleFactor);
