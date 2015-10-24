@@ -12,10 +12,13 @@ var BOARD_BORDER = 10;
 var BOTBAR_HEIGHT = 100;
 var RIGHTBAR_WIDTH = 250;
 
+var SCREEN_WIDTH = 1000;
+var SCREEN_HEIGHT = 800;
+
 var buttons;
 var boardBack;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-wrapper', {
+var game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.AUTO, 'phaser-wrapper', {
 	preload: preload,
 	create: create,
 	update: update,
@@ -317,14 +320,33 @@ function createBoard() {
 }
 
 function createButtons() {
-	var newSprites = [];
-	var vertOffset = 65
-	newSprites.push(game.add.sprite(game.world.centerX - 332, game.world.height - vertOffset, 'btn-neg-3'));
-	newSprites.push(game.add.sprite(game.world.centerX - 232, game.world.height - vertOffset, 'btn-neg-2'));
-	newSprites.push(game.add.sprite(game.world.centerX - 132, game.world.height - vertOffset, 'btn-neg-1'));
-	newSprites.push(game.add.sprite(game.world.centerX + 68, game.world.height - vertOffset, 'btn-pos-1'));
-	newSprites.push(game.add.sprite(game.world.centerX + 168, game.world.height - vertOffset, 'btn-pos-2'));
-	newSprites.push(game.add.sprite(game.world.centerX + 268, game.world.height - vertOffset, 'btn-pos-3'));
+	var newButtons = [];
+	var newButton;
+	var vertOffset = BOTBAR_HEIGHT - 10;
+
+	newButton = game.add.button(game.world.centerX - 332, game.world.height - vertOffset, 'btn-neg-3', pressButton);
+	newButton.pressVal = -3;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 232, game.world.height - vertOffset, 'btn-neg-2', pressButton);
+	newButton.pressVal = -2;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 132, game.world.height - vertOffset, 'btn-neg-1', pressButton);
+	newButton.pressVal = -1;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 68, game.world.height - vertOffset, 'btn-pos-1', pressButton);
+	newButton.pressVal = 1;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 168, game.world.height - vertOffset, 'btn-pos-2', pressButton);
+	newButton.pressVal = 2;
+	newButtons.push(newButton);
+
+	newButton = game.add.button(game.world.centerX - 268, game.world.height - vertOffset, 'btn-pos-3', pressButton);
+	newButton.pressVal = 3;
+	newButtons.push(newButton);
 }
 
 function createCharacters() {
@@ -349,4 +371,9 @@ function createCharacters() {
 
 	teamLeft.sprite = leftChar;
 	teamRight.sprite = rightChar;
+}
+
+function pressButton(item) {
+	pushCommand(item.pressVal);
+	console.log(typeof item.pressVal, item.pressVal);
 }
