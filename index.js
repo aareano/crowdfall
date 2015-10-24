@@ -194,7 +194,7 @@ function hideAuthOverlay() {
 
 	console.log('team is    L   '+myTeam);
 
-	if (myTeam=="l") {
+	if (myTeam.localeCompare("l")===0) {
 		$("#teamP").text(" Left");
 	} else {
 		$("#teamP").text(" Right");
