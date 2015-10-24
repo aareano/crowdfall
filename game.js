@@ -51,12 +51,12 @@ function preload() {
 	game.load.image('arrow-up-ext', 'images/arrow-up-ext.png');
 	game.load.image('arrow-down-ext', 'images/arrow-down-ext.png');
 
-	game.load.image('btn-neg-3', 'images/btn-neg-3.png');
-	game.load.image('btn-neg-2', 'images/btn-neg-2.png');
-	game.load.image('btn-neg-1', 'images/btn-neg-1.png');
-	game.load.image('btn-pos-1', 'images/btn-pos-1.png');
-	game.load.image('btn-pos-2', 'images/btn-pos-2.png');
-	game.load.image('btn-pos-3', 'images/btn-pos-3.png');
+	game.load.spritesheet('btn-neg-3', 'buttons/l3.png', 64, 64);
+	game.load.spritesheet('btn-neg-2', 'buttons/l2.png', 64, 64);
+	game.load.spritesheet('btn-neg-1', 'buttons/l1.png', 64, 64);
+	game.load.spritesheet('btn-pos-1', 'buttons/r1.png', 64, 64);
+	game.load.spritesheet('btn-pos-2', 'buttons/r2.png', 64, 64);
+	game.load.spritesheet('btn-pos-3', 'buttons/r3.png', 64, 64);
 
 	game.load.image('red_circle', 'images/red_circle.png');
 	game.load.image('blue_circle', 'images/blue_circle.png');
@@ -367,27 +367,27 @@ function createButtons() {
 	var vertOffset = BOTBAR_HEIGHT - 10;
 	var buttonWidth = 64 + 20
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 2.75, game.world.height - vertOffset, 'btn-neg-3', pressButton);
+	newButton = game.add.button(game.world.centerX - buttonWidth * 2.75, game.world.height - vertOffset, 'btn-neg-3', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -3;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 1.75, game.world.height - vertOffset, 'btn-neg-2', pressButton);
+	newButton = game.add.button(game.world.centerX - buttonWidth * 1.75, game.world.height - vertOffset, 'btn-neg-2', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -2;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX - buttonWidth * 0.75, game.world.height - vertOffset, 'btn-neg-1', pressButton);
+	newButton = game.add.button(game.world.centerX - buttonWidth * 0.75, game.world.height - vertOffset, 'btn-neg-1', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = -1;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 0.75, game.world.height - vertOffset, 'btn-pos-1', pressButton);
+	newButton = game.add.button(game.world.centerX + buttonWidth * 0.75, game.world.height - vertOffset, 'btn-pos-1', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 1;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 1.75, game.world.height - vertOffset, 'btn-pos-2', pressButton);
+	newButton = game.add.button(game.world.centerX + buttonWidth * 1.75, game.world.height - vertOffset, 'btn-pos-2', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 2;
 	newButtons.push(newButton);
 
-	newButton = game.add.button(game.world.centerX + buttonWidth * 2.75, game.world.height - vertOffset, 'btn-pos-3', pressButton);
+	newButton = game.add.button(game.world.centerX + buttonWidth * 2.75, game.world.height - vertOffset, 'btn-pos-3', pressButton, 0, 1, 0, 2);
 	newButton.pressVal = 3;
 	newButtons.push(newButton);
 }
