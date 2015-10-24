@@ -70,6 +70,14 @@ function assignTeam() {
 		}
 		console.log(myTeam);
 	});
+
+	$(document).ready(function(){
+		if (myTeam.localeCompare("l")===0) {
+			$("#teamP").text(" Left");
+		} else {
+			$("#teamP").text(" Right");
+		}
+	});
 }
 
 
