@@ -2,6 +2,8 @@
 	<head>
 		<title>CrowdFall</title>
 	    <link rel="stylesheet" type="text/css" href="index.css" />
+	    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+
 	</head>
 
 
@@ -9,7 +11,8 @@
 	<body>
 
 
-		<div id="overlay"><button id="authButton" onclick="fbAuth()" /></div>
+		<div id="overlay"><label for="authButton" id="authText">To play: </label><button id="authButton" onclick="fbAuth()" /></div>
+		<div id="teamBanner"><p>You are team:</p><p id="teamP"></p></div>
 
 		<div id="phaser-wrapper"></div>
 
