@@ -11,9 +11,10 @@ var BOARD_BORDER = 10;
 
 var BOTBAR_HEIGHT = 100;
 var RIGHTBAR_WIDTH = 250;
+var LEFTBAR_WIDTH = 250;
 
 var SCREEN_WIDTH = 1000;
-var SCREEN_HEIGHT = 800;
+var SCREEN_HEIGHT = 600;
 
 var buttons;
 var boardBack;
@@ -40,7 +41,8 @@ teamRight.position = 0;
 var activeTeam = teamLeft;
 
 function preload() {
-	game.load.image('box', 'square.png');
+	game.load.image('boxRight', 'square.png');
+	game.load.image('boxLeft', 'bSquare.png');
 
 	game.load.image('unit', 'images/unit.png');
 
@@ -88,25 +90,39 @@ function update() {
 }
 
 function render() {
-	renderFeed();
+	renderLeftFeed();
+	renderRightFeed();
 	renderLeft();
 	renderRight();
 }
 
-function renderFeed() {
+function renderLeftFeed() {
 	var feedLimit;
-	if (activeTeam.boxSets.length > 0) {
-		feedLimit = (game.world.height - BOTBAR_HEIGHT) / (activeTeam.boxSets[0][0].height + FEED_BORDER) - 1;
+	if (teamLeft.boxSets.length > 0) {
+		feedLimit = (game.world.height - BOTBAR_HEIGHT) / (teamLeft.boxSets[0][0].height + FEED_BORDER) - 1;
 	} else {
 		feedLimit = 0;
 	}
 
-	for (var i = 0; i < Math.min(activeTeam.instQueue.length, feedLimit); i++) {
-		renderInst(activeTeam.instQueue[i], activeTeam.boxSets[i], i);
+	for (var i = 0; i < Math.min(teamLeft.instQueue.length, feedLimit); i++) {
+		renderLeftInst(teamLeft.instQueue[i], teamLeft.boxSets[i], i);
 	}
 }
 
-function renderInst(inst, boxes, depth) {
+function renderRightFeed() {
+	var feedLimit;
+	if (teamRight.boxSets.length > 0) {
+		feedLimit = (game.world.height - BOTBAR_HEIGHT) / (teamRight.boxSets[0][0].height + FEED_BORDER) - 1;
+	} else {
+		feedLimit = 0;
+	}
+
+	for (var i = 0; i < Math.min(teamRight.instQueue.length, feedLimit); i++) {
+		renderRightInst(teamRight.instQueue[i], teamRight.boxSets[i], i);
+	}
+}
+
+function renderRightInst(inst, boxes, depth) {
 	var newBox;
 	for (var i = 1; i <= Math.abs(inst); i++) {
 		newBox = boxes[i-1];
@@ -123,20 +139,38 @@ function renderInst(inst, boxes, depth) {
 	}
 }
 
+function renderLeftInst(inst, boxes, depth) {
+	var newBox;
+	for (var i = 1; i <= Math.abs(inst); i++) {
+		newBox = boxes[i-1];
+
+		var factor;
+		if (inst < 0) {
+			factor = -1 * (-3 + (-1 * i));
+		} else {
+			factor = 4 - i;
+		}
+
+		newBox.x = ((newBox.width + FEED_BORDER) * 6) - ((newBox.width + FEED_BORDER) * factor) + FEED_BORDER;
+		newBox.y = (depth * (FEED_BORDER + newBox.height)) + FEED_BORDER;
+		console.log(newBox.x);
+	}
+}
+
 function pushLeftQueue(inst) {
-	pushQueue(inst, teamLeft);
+	pushQueue(inst, teamLeft, 'boxLeft');
 }
 
 function pushRightQueue(inst) {
-	pushQueue(inst, teamRight);
+	pushQueue(inst, teamRight, 'boxRight');
 }
 
-function pushQueue(inst, team) {
+function pushQueue(inst, team, imgKey) {
 	team.instQueue.push(inst);
 	var boxSet = [];
 	var newBox;
 	for (var i = 0; i < Math.abs(inst); i++) {
-		newBox = game.add.sprite(-100,-100, 'box');
+		newBox = game.add.sprite(-100,-100, imgKey);
 		newBox.scale.setTo(0.2, 0.2);
 		boxSet.push(newBox);
 	}
@@ -247,10 +281,10 @@ function renderTeam(team) {
 function createBoard() {
 	// Initialize board
 	var index;
-	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH) / BASE_SIZE);
+	var totalBlockWidth = Math.floor((game.world.width - RIGHTBAR_WIDTH - LEFTBAR_WIDTH) / BASE_SIZE);
 	var blockWidth = totalBlockWidth - BOARD_BORDER;
 	var blockHeight = blockWidth;
-	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / (blockHeight + BOARD_BORDER));
+	var numFloors = Math.floor((game.world.height - BOTBAR_HEIGHT) / (blockHeight + BOARD_BORDER)) - 1;
 
 	// Constants are dummies
 	BOARD_HEIGHT = numFloors;
@@ -276,7 +310,7 @@ function createBoard() {
 			newArrow = undefined;
 			newSprite = undefined;
 
-			newX = ((blockWidth + BOARD_BORDER) * col) + BOARD_BORDER;
+			newX = LEFTBAR_WIDTH + ((blockWidth + BOARD_BORDER) * col) + BOARD_BORDER;
 			newY = (game.world.height - (((blockHeight + BOARD_BORDER) * row) + BOTBAR_HEIGHT));
 			newSprite = game.add.sprite(newX, newY, 'unit');
 			newSprite.scale.setTo(unitScaleFactor, unitScaleFactor);
