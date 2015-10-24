@@ -4,6 +4,7 @@ html, body {
 
 canvas {
 	text-align: center;
+	margin: auto;
 }
 
 #phaser-wrapper {
