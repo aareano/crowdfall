@@ -185,14 +185,21 @@ function fetchCommands() {
 
 function hideAuthOverlay() {
 	$(document).ready(function(){
-		$('#overlay').hide();
-		$('#teamBanner').show();
+		$("#overlay").hide();
+		$("#teamBanner").show();
 	});
+
+	if (myTeam==="l") {
+		$("#teamP").text("Left");
+	} else {
+		$("#teamP").text("Right");
+	}
 }
 
 function showAuthOverlay() {
 	$(document).ready(function(){
-		$('#overlay').show();
-		$('#teamBanner').hide();
+		$("#overlay").show();
+		$("#teamBanner").hide();
 	});
+
 }
