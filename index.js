@@ -6,7 +6,7 @@ var auth;
 var leftRef;
 var rightRef;
 
-var team;
+var myTeam;
 var numBlocks;
 
 //onAuth watch
@@ -46,20 +46,20 @@ function assignTeam() {
 	teamRef.on("value", function(snap) {
 		if (snap) {
 			//not a new user
-			team = snap.val();
+			myTeam = snap.val();
 		} else {
 
 			//randomly assign team
 			var roll = Math.random();
 
 			if (roll < 0.5) {
-				team = "l";
+				myTeam = "l";
 			} else {
-				team = "r";
+				myTeam = "r";
 			}
 
 			//store value on firebase
-			teamRef.set(team);
+			teamRef.set(myTeam);
 		}
 	});
 }
@@ -108,8 +108,11 @@ function assignTeam() {
 // }
  
 //pushes command to relevant team
-function pushCommand() {
+function pushCommand(instruction) {
 	//must first check if 
+	//team
+	//check
+	//ref.push(instruction);
 }
 
 
