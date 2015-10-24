@@ -95,3 +95,16 @@ function getRightBlocks() {
 		}
 	});
 }
+
+//pushes command to relevant team
+function pushCommand() {
+	//must first check if 
+}
+
+
+//when last command of a block is fetched, early simulation must happen
+//simulate result of the block commands and report back result
+//set coord on $block/0/
+function earlySimulate() {
+
+}
