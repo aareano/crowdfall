@@ -14,8 +14,10 @@ ref.onAuth(function(authData) {
 	if (authData) {
 		console.log("Authenticated with uid:", authData.uid);
 		setVarsOnAuth(authData);
+		hideAuthOverlay();
 	} else {
 		console.log("Unauthenticated");
+		showAuthOverlay();
 	}
 });
 
@@ -32,6 +34,7 @@ function fbAuth() {
 	  if (error) {
 	    console.log("Login Failed!", error);
 	    setVarsOnAuth(authData);
+	    hideAuthOverlay();
 	  } else {
 	    console.log("Authenticated successfully with payload:", authData);
 	  }
@@ -180,9 +183,13 @@ function fetchCommands() {
 }
 
 function hideAuthOverlay() {
-
+	$(document).ready(function(){
+		$('#overlay').hide();
+	});
 }
 
 function showAuthOverlay() {
-	
+	$(document).ready(function(){
+		$('#overlay').show();
+	});
 }
