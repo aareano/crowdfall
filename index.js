@@ -64,9 +64,9 @@ function assignTeam() {
 		}
 		$(document).ready(function(){
 			if (myTeam.localeCompare("l")===0) {
-				$("#teamP").text(" Left");
+				$("#teamP").text(" Blue");
 			} else {
-				$("#teamP").text(" Right");
+				$("#teamP").text(" Red");
 			}
 		});
 	});
