@@ -12,10 +12,13 @@ var BOARD_BORDER = 10;
 var BOTBAR_HEIGHT = 100;
 var RIGHTBAR_WIDTH = 250;
 
+var SCREEN_WIDTH = 1000;
+var SCREEN_HEIGHT = 800;
+
 var buttons;
 var boardBack;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-wrapper', {
+var game = new Phaser.Game(SCREEN_WIDTH, SCREEN_HEIGHT, Phaser.AUTO, 'phaser-wrapper', {
 	preload: preload,
 	create: create,
 	update: update,
@@ -370,7 +373,7 @@ function createCharacters() {
 	teamRight.sprite = rightChar;
 }
 
-void pressButton(item) {
+function pressButton(item) {
 	pushCommand(item.pressVal);
 	console.log(typeof item.pressVal, item.pressVal);
 }
