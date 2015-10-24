@@ -64,6 +64,10 @@ function assignTeam() {
 	});
 }
 
+
+
+//block chain has been deprecated 
+
 // //fetches commands starting from last block
 // function getLeftBlocks() {
 
