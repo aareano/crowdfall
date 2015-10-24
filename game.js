@@ -71,6 +71,8 @@ function create() {
 	buttons = createButtons();
 
 	fetchCommands();
+
+	game.time.events.loop(Phaser.Timer.SECOND * 0.1, popQueues, this);
 }
 
 var downFlag = false;
@@ -82,15 +84,15 @@ function update() {
 	// popLeftQueue();
 	// popRightQueue();
 
-	if (cursors.up.isDown) {
-		if (! upFlag) {
-			// upFlag = true;
-			popLeftQueue();
-			popRightQueue();
-		}
-	} else {
-		upFlag = false;
-	}
+	// if (cursors.up.isDown) {
+	// 	if (! upFlag) {
+	// 		// upFlag = true;
+	// 		popLeftQueue();
+	// 		popRightQueue();
+	// 	}
+	// } else {
+	// 	upFlag = false;
+	// }
 }
 
 function render() {
@@ -148,6 +150,11 @@ function pushQueue(inst, team) {
 	}
 
 	team.boxSets.push(boxSet);
+}
+
+function popQueues() {
+	popLeftQueue();
+	popRightQueue();
 }
 
 function popLeftQueue() {
