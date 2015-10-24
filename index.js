@@ -204,3 +204,8 @@ function showAuthOverlay() {
 	});
 
 }
+
+function purge() {
+	leftRef.set(null);
+	rightRef.set(null);
+}
