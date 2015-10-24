@@ -151,13 +151,13 @@ function fetchCommands() {
 		var lastIndex = snapshot.numChildren();
 
 		snapshot.forEach(function (childSnapShot) {
-			pushrightQueue(childSnapShot.val());
+			pushRightQueue(childSnapShot.val());
 		});
 
 		var key = snapshot.child(lastIndex).key();
 
 		rightRef.orderByKey().startAt(key).on("child_added", function(callSnapShot) {
-			pushrightQueue(callSnapShot.val());
+			pushRightQueue(callSnapShot.val());
 		});
 
 	});

@@ -36,17 +36,17 @@ function preload() {
 function create() {
 	game.stage.backgroundColor = 0x000000;
 
-	pushLeftQueue(-3);
-	pushLeftQueue(2);
-	pushLeftQueue(-3);
-	pushLeftQueue(-1);
-	pushLeftQueue(3);
+	// pushLeftQueue(-3);
+	// pushLeftQueue(2);
+	// pushLeftQueue(-3);
+	// pushLeftQueue(-1);
+	// pushLeftQueue(3);
 
-	pushRightQueue(3);
-	pushRightQueue(-1);
-	pushRightQueue(2);
-	pushRightQueue(2);
-	pushRightQueue(-1);
+	// pushRightQueue(3);
+	// pushRightQueue(-1);
+	// pushRightQueue(2);
+	// pushRightQueue(2);
+	// pushRightQueue(-1);
 }
 
 var downFlag = false;
